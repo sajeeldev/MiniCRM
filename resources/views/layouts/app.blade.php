@@ -15,6 +15,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="{{ route('dashboard') }}"
             style="background-color: rgb(19, 79, 168); color:white; text-decoration:none; padding:7px 15px; border-radius:5px; margin-left:20px;">Dashboard</a>
+            {{-- <a href="{{ route('companies.index') }}"
+            style="background-color: rgb(19, 79, 168); color:white; text-decoration:none; padding:7px 15px; border-radius:5px; margin-left:20px;">Companies</a>
+            <a href="{{ route('employees.index') }}"
+            style="background-color: rgb(19, 79, 168); color:white; text-decoration:none; padding:7px 15px; border-radius:5px; margin-left:20px;">Emloyees</a> --}}
         <div class="container">
             <a class="navbar-brand" href="{{ route('companies.index') }}">Mini-CRM</a>
         </div>

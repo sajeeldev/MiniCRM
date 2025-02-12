@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Mail\NewCompanyNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
@@ -30,7 +32,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required',
             'email' => 'nullable|email',
             'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
@@ -38,15 +40,20 @@ class CompanyController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
+            $path = $request->file('logo')->store('public/logos');
+            $logoPath = str_replace('public/', '', $path);
         }
 
-        Company::create([
+        $company = Company::create([
             'name' => $request->name,
             'email' => $request->email,
             'logo' => $logoPath ?? null,
             'website' => $request->website,
         ]);
+
+        $company->save();
+
+        Mail::to($company->email)->send(new NewCompanyNotification($company));
 
         return redirect()->route('companies.index');
 
