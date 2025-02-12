@@ -18,7 +18,7 @@ require __DIR__.'/auth.php';
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('companies', CompanyController::class);
-    Route::resource('employees', EmployeeController::class);
+    Route::resource('companies', CompanyController::class)->name('index', 'companies.index');
+    Route::resource('employees', EmployeeController::class)->name('index', 'employees.index');
 });
 
